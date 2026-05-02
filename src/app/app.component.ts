@@ -72,7 +72,7 @@ export class AppComponent {
           'assets/hygan_3.jpg',
           'assets/hygan_4.jpg',
         ],
-        logo: 'assets/hygan-logo.png',
+        logo: 'assets/image1.jpg',
         phone: '919876543210',
         email: 'info@tech.com',
       },
