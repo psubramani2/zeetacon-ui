@@ -1,196 +1,200 @@
-<main class="app">
+<div class="app-container">
   <!-- HEADER -->
   <header class="header">
     <div class="header-left">
-      <div class="logo">#ZC</div>
-
-      <div>
-        <h1>{{ title }}</h1>
-        <p class="sub">Discover companies & services</p>
-      </div>
+      <h2 class="title">ZettaCON</h2>
+      <p class="tagline">Connecting you to the right services, instantly !</p>
     </div>
 
-    <button class="theme-btn" (click)="toggleTheme()">
-      {{ isDarkMode ? "☀️" : "🌙" }}
-    </button>
+    <div class="settings-wrapper">
+      <button class="settings-btn" (click)="toggleMenu()">⚙️</button>
+
+      <div class="settings-menu" *ngIf="showSettings">
+        <button class="menu-icon" (click)="toggleTheme()">
+          {{ isDark ? "☀️" : "🌙" }}
+        </button>
+      </div>
+    </div>
   </header>
 
-  <!-- SEARCH -->
-  <section class="search" *ngIf="!selectedCompany">
-    <div class="search-box">
-      <span>🔍</span>
-
-      <input
-        type="text"
-        placeholder="Search companies..."
-        [(ngModel)]="searchQuery"
-        (keyup.enter)="onSearch()"
-      />
-    </div>
-  </section>
-
-  <!-- RESULTS -->
-  <section *ngIf="!selectedCompany" class="list">
-    <div class="card" *ngFor="let item of results" (click)="openDetails(item)">
-      <div class="left">
-        <div class="title">
-          {{ item.name }}
-          <span class="badge" *ngIf="item.verified">✔</span>
-        </div>
-
-        <div class="address">📍 {{ item.address }}</div>
-
-        <div class="chips">
-          <span *ngFor="let s of item.services">{{ s }}</span>
-        </div>
+  <!-- SCROLL AREA (ONLY ONE SCROLL CONTAINER) -->
+  <main class="content" #scrollContainer (scroll)="onScroll($event)">
+    <!-- HOME -->
+    <ng-container *ngIf="activeTab === 'home' && !selectedCompany">
+      <div class="welcome">
+        <h3>Welcome {{ username }} 👋</h3>
+        <p>Discover companies</p>
       </div>
 
-      <div class="right">
-        <div class="rating">⭐ {{ item.rating }}</div>
-
-        <div class="contact">📞 {{ item.phone }}</div>
-        <div class="contact">✉️ {{ item.email }}</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DETAILS -->
-  <section *ngIf="selectedCompany" class="details">
-    <button class="back" (click)="backToList()">← Back</button>
-
-    <div class="company-header">
-      <div class="logo">
-        <img [src]="selectedCompany.logo" alt="Company Logo" />
-      </div>
-
-      <div class="company-info">
-        <h2>{{ selectedCompany.name }}</h2>
-
-        <p class="address">
-          ⭐ {{ selectedCompany.rating }} • 📍 {{ selectedCompany.address }}
-        </p>
-
-        <div class="contact">
-          📞 {{ selectedCompany.phone }} | ✉️ {{ selectedCompany.email }}
-        </div>
-      </div>
-    </div>
-    <!-- TABS -->
-    <div class="tabs">
-      <button
-        class="tab"
-        [class.active]="activeTab === 'overview'"
-        (click)="activeTab = 'overview'"
-      >
-        Overview
-      </button>
-
-      <button
-        class="tab"
-        [class.active]="activeTab === 'products'"
-        (click)="activeTab = 'products'"
-      >
-        Service / Products
-      </button>
-
-      <!-- <button
-        class="tab"
-        [class.active]="activeTab === 'services'"
-        (click)="activeTab = 'services'"
-      >
-        Services
-      </button> -->
-
-      <button
-        class="tab"
-        [class.active]="activeTab === 'offers'"
-        (click)="activeTab = 'offers'"
-      >
-        Offers
-      </button>
-
-      <button
-        class="tab"
-        [class.active]="activeTab === 'jobs'"
-        (click)="activeTab = 'jobs'"
-      >
-        Jobs
-      </button>
-      <button
-        class="tab"
-        [class.active]="activeTab === 'gallery'"
-        (click)="activeTab = 'gallery'"
-      >
-        Gallery
-      </button>
-    </div>
-
-    <!-- TAB CONTENT -->
-    <div class="tab-content">
-      <!-- OVERVIEW -->
-      <div *ngIf="activeTab === 'overview'" class="tab-panel">
-        <p>
-          {{ selectedCompany.description }}
-        </p>
-      </div>
-
-      <!-- SERVICES -->
-      <div *ngIf="activeTab === 'services'" class="tab-panel">
-        <div class="chips">
-          <span *ngFor="let s of selectedCompany.services">{{ s }}</span>
-        </div>
-      </div>
-
-      <!-- products -->
-      <div *ngIf="activeTab === 'products'" class="tab-panel">
-        <!-- <div class="section-header">
-          <h3>Our Products</h3>
-          <p>
-            Explore the solutions we build to help businesses scale faster and
-            smarter.
-          </p>
-        </div> -->
-
-        <div class="product-list">
-          <div class="product-card" *ngFor="let p of selectedCompany.products">
-            <div class="product-title">
-              {{ p.name }}
-            </div>
-
-            <div class="product-desc">
-              {{ p.description }}
-            </div>
+      <div class="list">
+        <div class="card" *ngFor="let item of mockData()" (click)="open(item)">
+          <img [src]="item.image" />
+          <div class="info">
+            <h4>{{ item.name }}</h4>
+            <p>{{ item.address }}</p>
           </div>
         </div>
       </div>
+    </ng-container>
 
-      <div *ngIf="activeTab === 'jobs'" class="tab-panel">coming soon...</div>
-
-      <!-- Offers -->
-      <div *ngIf="activeTab === 'offers'" class="tab-panel">coming soon...</div>
-
-      <!-- GALLERY -->
-      <!-- GALLERY -->
-      <div *ngIf="activeTab === 'gallery'" class="tab-panel gallery">
-        <img
-          *ngFor="let img of selectedCompany.images"
-          [src]="img"
-          (click)="openImage(img)"
-          class="gallery-img"
+    <!-- SEARCH -->
+    <ng-container *ngIf="activeTab === 'search' && !selectedCompany">
+      <div class="search-box">
+        <input
+          placeholder="Search companies..."
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="onSearch()"
         />
+        <button class="search-btn" (click)="onSearch()">🔍</button>
       </div>
-    </div>
 
-    <!-- Jobs -->
-  </section>
+      <div *ngIf="isLoading" class="loading-container">
+        <div class="loader"></div>
+        <p>Searching...</p>
+      </div>
 
-  <footer class="simple-footer">
-    <p>© {{ year }} All Rights Reserved by Hygan Technologies</p>
-  </footer>
+      <div class="result-meta" *ngIf="results.length && !isLoading">
+        <div class="result-left">
+          <span class="count">{{ results.length }}</span>
+          results found
+        </div>
 
+        <div class="query">
+          for "<span>{{ searchQuery }}</span
+          >"
+        </div>
+      </div>
+
+      <!-- RESULTS -->
+      <div class="list" *ngIf="!isLoading">
+        <div class="card" *ngFor="let item of results" (click)="open(item)">
+          <img [src]="item.image" />
+          <div class="info">
+            <h4>{{ item.name }}</h4>
+            <p>{{ item.address }}</p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- DETAILS PAGE -->
+    <ng-container *ngIf="selectedCompany">
+      <div class="details">
+        <!-- HEADER -->
+        <div class="details-header">
+          <button class="back-btn" (click)="back()">←</button>
+        </div>
+
+        <img [src]="selectedCompany.image" class="banner" />
+
+        <h2>{{ selectedCompany.name }}</h2>
+
+        <div class="meta">
+          ⭐ {{ selectedCompany.rating }} • 📍 {{ selectedCompany.address }}
+        </div>
+
+        <div class="contact">
+          📞 {{ selectedCompany.phone }} <br />
+          ✉️ {{ selectedCompany.email }}
+        </div>
+
+        <!-- TABS -->
+        <div class="tabs">
+          <button
+            (click)="activeDetailTab = 'overview'"
+            [class.active]="activeDetailTab === 'overview'"
+          >
+            Overview
+          </button>
+
+          <button
+            (click)="activeDetailTab = 'projects'"
+            [class.active]="activeDetailTab === 'projects'"
+          >
+            Projects
+          </button>
+
+          <button
+            (click)="activeDetailTab = 'gallery'"
+            [class.active]="activeDetailTab === 'gallery'"
+          >
+            Gallery
+          </button>
+        </div>
+
+        <!-- OVERVIEW -->
+        <div *ngIf="activeDetailTab === 'overview'" class="tab-content">
+          <p>{{ selectedCompany.description }}</p>
+        </div>
+
+        <!-- PROJECTS -->
+        <div *ngIf="activeDetailTab === 'projects'" class="tab-content">
+          <div class="project-card" *ngFor="let p of selectedCompany.projects">
+            <h4>{{ p.name }}</h4>
+            <p>{{ p.description }}</p>
+          </div>
+        </div>
+
+        <!-- GALLERY -->
+        <div *ngIf="activeDetailTab === 'gallery'" class="gallery">
+          <img
+            *ngFor="let img of selectedCompany.gallery"
+            [src]="img"
+            (click)="openImage(img)"
+          />
+        </div>
+
+        <button class="btn">Contact Now</button>
+      </div>
+    </ng-container>
+  </main>
+
+  <!-- SCROLL TO TOP BUTTON -->
+  <button
+    class="scroll-top"
+    *ngIf="showScrollTop"
+    (click)="scrollToTop(scrollContainer)"
+  >
+    ⬆
+  </button>
+
+  <!-- IMAGE MODAL -->
   <div class="image-modal" *ngIf="selectedImage" (click)="closeImage()">
-    <img [src]="selectedImage" class="modal-img" />
+    <img [src]="selectedImage" />
   </div>
-</main>
 
-<router-outlet />
+  <!-- BOTTOM NAV -->
+  <footer class="bottom-nav">
+    <button
+      class="nav-item"
+      (click)="setTab('home')"
+      [class.active]="activeTab === 'home'"
+    >
+      🏠
+    </button>
+
+    <button
+      class="nav-item"
+      (click)="setTab('search')"
+      [class.active]="activeTab === 'search'"
+    >
+      🔍
+    </button>
+
+    <button
+      class="nav-item"
+      (click)="setTab('fav')"
+      [class.active]="activeTab === 'fav'"
+    >
+      ❤️
+    </button>
+
+    <button
+      class="nav-item"
+      (click)="setTab('profile')"
+      [class.active]="activeTab === 'profile'"
+    >
+      👤
+    </button>
+  </footer>
+</div>
