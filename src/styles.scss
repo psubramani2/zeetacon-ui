@@ -404,3 +404,37 @@ body {
 
   transition: 0.2s ease;
 }
+
+.contact-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+.contact-info p {
+  margin: 6px 0;
+  font-size: 14px;
+}
+
+.profile-container {
+   padding: 20px;
+  text-align: center;
+}
+
+.company-card {
+  background: var(--card-bg, #fff);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.company-card h4 {
+  margin-bottom: 8px;
+}
+
+.contact-info p {
+  margin: 6px 0;
+  font-size: 14px;
+}

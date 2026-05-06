@@ -66,12 +66,34 @@ export class AppComponent {
         phone: '+91 9876543210',
         email: 'info@hygan.com',
         image: 'assets/hygan_1.jpg',
-        description: 'Modern app development company.',
-        gallery: ['assets/hygan_1.jpg', 'assets/hygan_2.jpg'],
+        description:
+          'At Hygan Technologies, we craft cutting-edge web and mobile applications tailored to your business needs. Empowering students with internships, project guidance, and placement support—because innovation starts with the right foundation.',
+        gallery: [
+          'assets/hygan_1.jpg',
+          'assets/hygan_2.jpg',
+          'assets/hygan_3.jpg',
+          'assets/hygan_4.jpg',
+        ],
         projects: [
           {
-            name: 'E-Commerce App',
-            description: 'Online shopping solution',
+            name: 'App Development',
+            description:
+              'From concept to launch, we build scalable and user-friendly applications that drive growth. Whether it’s a sleek website or a powerful mobile app, we turn your vision into reality.',
+          },
+          {
+            name: 'Student Internships',
+            description:
+              'Gain hands-on experience in software development. Our internship program is designed to bridge the gap between academia and industry, preparing you for a successful career.',
+          },
+          {
+            name: 'Final Year Projects',
+            description:
+              'Struggling with your final year project? Our experts provide end-to-end support—from ideation to execution—ensuring your project stands out.',
+          },
+          {
+            name: 'Placement Assistance',
+            description:
+              'We don’t just guide you; we help you land your dream job. Our placement support includes resume building, interview preparation, and conducting mock interviews to help you crack the interviews and connecting with top companies for placements.',
           },
         ],
       },
@@ -82,12 +104,19 @@ export class AppComponent {
         phone: '+91 9123456780',
         email: 'contact@spinfotech.com',
         image: 'assets/image1.jpg',
-        description: 'AI solutions company.',
+        description:
+          'Our teams are working to solve complex challenges, advance the field of AI and help as many people as possible.',
         gallery: ['assets/image1.jpg'],
         projects: [
           {
-            name: 'CRM System',
-            description: 'Customer management platform',
+            name: 'Smart CRM Platform',
+            description:
+              'Manage customers, leads, and sales pipeline with automation tools.',
+          },
+          {
+            name: 'E-Commerce Suite',
+            description:
+              'Complete online store solution with payments, analytics, and inventory.',
           },
         ],
       },

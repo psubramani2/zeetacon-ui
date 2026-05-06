@@ -77,6 +77,32 @@
       </div>
     </ng-container>
 
+    <!-- Contact Us -->
+    <ng-container *ngIf="activeTab === 'profile'">
+      <div class="profile-container">
+        <!-- LOGO -->
+        <img
+          src="assets/hygan-logo.png"
+          alt="Hygan Technologies"
+          class="contact-logo"
+        />
+
+        <h4>Hygan Technologies</h4>
+
+        <p>
+          We build smart digital solutions and connect businesses efficiently.
+        </p>
+
+        <div class="contact-info">
+          <p>📍 Coimbatore, Tamil Nadu</p>
+          <p>📞 +91 98765 43210</p>
+          <p>✉️ visit to http://hygan.in</p>
+        </div>
+
+        <button class="btn">Get in Touch</button>
+      </div>
+    </ng-container>
+
     <!-- DETAILS PAGE -->
     <ng-container *ngIf="selectedCompany">
       <div class="details">
